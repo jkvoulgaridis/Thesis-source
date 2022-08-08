@@ -1,0 +1,71 @@
+# builder step used to download and configure spark environment
+FROM openjdk:11.0.11-jre-slim-buster as builder
+
+# Add Dependencies for PySpark
+RUN apt-get update && apt-get install -y curl vim wget software-properties-common ssh net-tools ca-certificates python3 python3-pip python3-numpy python3-matplotlib python3-scipy python3-pandas python3-simpy
+
+RUN update-alternatives --install "/usr/bin/python" "python" "$(which python3)" 1
+
+# Fix the value of PYTHONHASHSEED
+# Note: this is needed when you use Python 3.3 or greater
+ENV SPARK_VERSION=3.0.0 \
+HADOOP_VERSION=3.2 \
+SPARK_HOME=/opt/spark \
+PYTHONHASHSEED=1
+
+# Download and uncompress spark from the apache archive
+RUN mkdir -p /opt/spark
+COPY ./spark /opt/spark
+
+
+RUN mkdir -p /opt/hadoop
+#&& RUN wget --no-verbose -O hadoop.tar.gz https://archive.apache.org/dist/hadoop/core/hadoop-3.2.2/hadoop-3.2.2.tar.gz  \
+#&& tar -xvf hadoop-3.2.2.tar.gz -C /opt/hadoop --strip-components=1 \
+#&& rm hadoop-3.2.2.tar.gz
+
+COPY ./hadoop-3.2.2.tar.gz /opt/hadoop-3.2.2.tar.gz
+RUN tar -xvf /opt/hadoop-3.2.2.tar.gz -C /opt/hadoop --strip-components=1 
+#&& rm /opt/hadoop-3.2.2.tar.gz
+
+#RUN wget --no-verbose -O apache-spark.tgz "https://archive.apache.org/dist/spark/spark-${SPARK_VERSION}/spark-${SPARK_VERSION}-#bin-hadoop${HADOOP_VERSION}.tgz" \
+#&& mkdir -p /opt/spark \
+#&& tar -xf apache-spark.tgz -C /opt/spark --strip-components=1 \
+#&& rm apache-spark.tgz
+
+
+## Apache spark environment
+#FROM builder as apache-spark
+
+WORKDIR /opt/spark
+
+ENV SPARK_MASTER_PORT=7077 \
+SPARK_MASTER_WEBUI_PORT=8080 \
+SPARK_LOG_DIR=/opt/spark/logs \
+SPARK_MASTER_LOG=/opt/spark/logs/spark-master.out \
+SPARK_WORKER_LOG=/opt/spark/logs/spark-worker.out \
+SPARK_WORKER_WEBUI_PORT=8080 \
+SPARK_WORKER_PORT=7000 \
+SPARK_MASTER="spark://spark-master:7077" \
+SPARK_WORKLOAD="master"
+
+ENV HADOOP_HOME=/opt/hadoop \
+HADOOP_CONF_DIR=/opt/hadoop/etc/hadoop \
+HADOOP_MAPRED_HOME=/opt/hadoop \
+HADOOP_COMMON_HOME=/opt/hadoop \
+HADOOP_HDFS_HOME=/opt/hadoop 	\
+YARN_HOME=/opt/hadoop   \
+PATH=$PATH:/opt/hadoop/bin \
+HDFS_DATANODE_USER=root
+
+# RUN  /etc/init.d/ssh start
+
+EXPOSE 8080 7077 6066 22
+
+RUN mkdir -p $SPARK_LOG_DIR && \
+touch $SPARK_MASTER_LOG && \
+touch $SPARK_WORKER_LOG && \
+ln -sf /dev/stdout $SPARK_MASTER_LOG && \
+ln -sf /dev/stdout $SPARK_WORKER_LOG
+
+COPY start-spark.sh /
+CMD ["/bin/bash", "/start-spark.sh"]

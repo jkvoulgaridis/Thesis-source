@@ -1,0 +1,10 @@
+[0m[[0m[31merror[0m] [0m[0m/home/john/personal/spark-docker/apps/my-spark-app/src/main/scala/example/Hello.scala:6:25: object mllib is not a member of package org.apache.spark[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.apache.spark.mllib.linalg.{Vectors, Matrices}[0m
+[0m[[0m[31merror[0m] [0m[0m                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/john/personal/spark-docker/apps/my-spark-app/src/main/scala/example/Hello.scala:7:25: object mllib is not a member of package org.apache.spark[0m
+[0m[[0m[31merror[0m] [0m[0mimport org.apache.spark.mllib.linalg.distributed.{IndexedRowMatrix,[0m
+[0m[[0m[31merror[0m] [0m[0m                        ^[0m
+[0m[[0m[31merror[0m] [0m[0m/home/john/personal/spark-docker/apps/my-spark-app/src/main/scala/example/Hello.scala:75:7: not found: value app5[0m
+[0m[[0m[31merror[0m] [0m[0m  val app5(): Unit = {[0m
+[0m[[0m[31merror[0m] [0m[0m      ^[0m
+[0m[[0m[31merror[0m] [0m[0mthree errors found[0m

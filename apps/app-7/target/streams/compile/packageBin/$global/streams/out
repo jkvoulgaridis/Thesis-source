@@ -1,0 +1,11 @@
+[0m[[0m[0minfo[0m] [0m[0mPackaging /home/john/personal/spark-docker/apps/app-7/target/scala-2.12/my-spark-app_2.12-0.1.0-SNAPSHOT.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	example[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/john/personal/spark-docker/apps/app-7/target/scala-2.12/classes/example[0m
+[0m[[0m[0mdebug[0m] [0m[0m	example/appCode.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/john/personal/spark-docker/apps/app-7/target/scala-2.12/classes/example/appCode.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	example/myApp$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/john/personal/spark-docker/apps/app-7/target/scala-2.12/classes/example/myApp$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	example/myApp.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  /home/john/personal/spark-docker/apps/app-7/target/scala-2.12/classes/example/myApp.class[0m
+[0m[[0m[0minfo[0m] [0m[0mDone packaging.[0m

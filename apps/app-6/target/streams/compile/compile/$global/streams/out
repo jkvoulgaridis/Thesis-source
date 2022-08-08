@@ -1,0 +1,5 @@
+[0m[[0m[31merror[0m] [0m[0m/home/john/personal/spark-docker/apps/app-6/src/main/scala/example/Hello.scala:31:8: value orderBy is not a member of org.apache.spark.rdd.RDD[(String, Int)][0m
+[0m[[0m[31merror[0m] [0m[0mpossible cause: maybe a semicolon is missing before `value orderBy'?[0m
+[0m[[0m[31merror[0m] [0m[0m      .orderBy()[0m
+[0m[[0m[31merror[0m] [0m[0m       ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

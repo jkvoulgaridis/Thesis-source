@@ -1,0 +1,3 @@
+[error] error writing Dependencies$: java.nio.file.AccessDeniedException /home/john/personal/spark-docker/apps/my-spark-app/project/target/scala-2.12/sbt-1.0/classes/Dependencies$.class
+[error] error writing Dependencies: java.nio.file.AccessDeniedException /home/john/personal/spark-docker/apps/my-spark-app/project/target/scala-2.12/sbt-1.0/classes/Dependencies.class
+[error] two errors found

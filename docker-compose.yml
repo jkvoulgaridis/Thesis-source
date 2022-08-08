@@ -1,0 +1,111 @@
+version: "3.3"
+services:
+  spark-master:
+    image: cluster-spark
+    ports:
+      - "9090:8080"
+      - "7077:7077"
+    volumes:
+       - ./apps:/opt/spark-apps
+       - ./data:/opt/spark-data
+       - ./scripts:/opt/scripts
+       - ./hadoop-conf:/opt/hadoop-conf
+       - ./app_logs_experimental:/opt/apps-logs
+    hostname: spark-master
+    environment:
+      - SPARK_LOCAL_IP=spark-master
+      - SPARK_WORKLOAD=master
+      - HDFS_NAMENODE_USER=root
+      - HDFS_SECONDARYNAMENODE_USER=root
+      - CONSENSUS=2
+      - HONEST=1
+      - HASH_SIZE=250
+  spark-worker-a:
+    image: cluster-spark
+    ports:
+      - "9091:8081"
+      - "7000:7000"
+    hostname: spark-worker-1
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-a
+      - CONSENSUS=2
+      - HONEST=1
+      - HASH_SIZE=250
+    volumes:
+       - ./scripts:/opt/scripts
+       - ./hadoop-conf:/opt/hadoop-conf
+  spark-worker-b:
+    image: cluster-spark
+    ports:
+      - "9092:8082"
+      - "7001:7000"
+    hostname: spark-worker-2
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-b
+      - CONSENSUS=2
+      - HONEST=1
+      - HASH_SIZE=250
+    volumes:
+        - ./scripts:/opt/scripts
+        - ./hadoop-conf:/opt/hadoop-conf
+  spark-worker-c:
+    image: cluster-spark
+    ports:
+      - "9093:8083"
+      - "7002:7000"
+    depends_on:
+      - spark-master
+    hostname: spark-worker-3
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-c
+      - CONSENSUS=2
+      - HONEST=1
+      - HASH_SIZE=250
+    volumes:
+        - ./scripts:/opt/scripts  
+        - ./hadoop-conf:/opt/hadoop-conf
+
+  spark-worker-d:
+    image: cluster-spark
+    ports:
+      - "9094:8085"
+      - "7003:7000"
+    depends_on:
+      - spark-master
+    hostname: spark-worker-4
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=2
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-d
+      - CONSENSUS=2
+      - HONEST=1
+      - HASH_SIZE=250
+    volumes:
+      - ./scripts:/opt/scripts
+      - ./hadoop-conf:/opt/hadoop-conf
